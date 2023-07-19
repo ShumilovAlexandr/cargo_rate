@@ -1,0 +1,19 @@
+services:
+  # Контейнер базы данных
+  db:
+    container_name: db_name
+    image: postgres:13.0-alpine
+    env_file:
+      - .env
+
+  # Контейнер с приложением
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    command: ["/fastapi_test/app.sh"]
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
